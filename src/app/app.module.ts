@@ -8,6 +8,7 @@ import { ContainerComponent } from './container/container.component';
 import { WeatherForecastComponent } from './weather-forecast/weather-forecast.component';
 import { WeatherCurrentComponent } from './weather-current/weather-current.component';
 import { WeatherAlertsComponent } from './weather-alerts/weather-alerts.component';
+import { Component } from '@angular/core';
 
 @NgModule({
   declarations: [
