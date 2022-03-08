@@ -6,6 +6,9 @@ import {
   FormControl,
   ValidatorFn
 } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-selector',
@@ -14,51 +17,38 @@ import {
 })
 export class SelectorComponent implements OnInit {
   form: FormGroup;
-  countries: { id: string, name: string}[];
-  cities: {id: string, name: string, admin: string}[];
+  countries: Observable<any[]>;
+  cities: Observable<any[]>;
+  firestore: AngularFirestore
+  coords = {lat:0, lgn:0};
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, firestore: AngularFirestore) {
+    
     this.form = this.formBuilder.group({
       countries: [''],
       cities: ['']
     });
-    this.countries = this.getCountries();
-    this.cities = [];
-
+    this.countries = firestore.collection('countries').valueChanges();
+    this.cities = new Observable<any[]>();
+    this.firestore = firestore;
   }
 
-  submit() {
-    console.log(this.form.value);
+  newCountry(country: string) {
+    this.cities = this.getCities(country);
   }
 
-  getCountries() {
-    return [
-      { id: '1', name: 'order 1' },
-      { id: '2', name: 'order 2' },
-      { id: '3', name: 'order 3' },
-      { id: '4', name: 'order 4' }
-    ];
-  }
-
-  newCountry(id: string) {
-    console.log('hi');
-    console.log(id);
-    this.cities = this.getCities(id);
+  newCity(coords: string) {
+    this.coords.lat = parseFloat(coords.split(',')[0]);
+    this.coords.lgn = parseFloat(coords.split(',')[1]);
   }
 
   getCities(input: string) {
-    if(input == '1') {
-      return [{ id: '1', name: 'city 1', admin: 'area 1'},
-      { id: '2', name: 'city 2', admin: 'area 1'}
-    ]
-    }
-    else {
-      return [{ id: '1', name: 'city 1', admin: 'other area'},
-      { id: '2', name: 'city 2', admin: 'other area'}
-    ]
-    }
+    return this.firestore.collection("/allCities", ref => ref.where("country", "==", input)).valueChanges();
   }
 
+  submit() {
+    console.log(JSON.stringify(this.coords));
+  }
 
   ngOnInit(): void {
   }

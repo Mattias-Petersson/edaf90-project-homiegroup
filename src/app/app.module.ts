@@ -9,7 +9,11 @@ import { WeatherForecastComponent } from './weather-forecast/weather-forecast.co
 import { WeatherCurrentComponent } from './weather-current/weather-current.component';
 import { WeatherAlertsComponent } from './weather-alerts/weather-alerts.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat';
 import { Component } from '@angular/core';
+import { environment } from '../environments/environment';
+import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 
 @NgModule({
@@ -25,6 +29,9 @@ import { Component } from '@angular/core';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAnalyticsModule,
+    AngularFirestoreModule
     HttpClientModule
   ],
   providers: [],
