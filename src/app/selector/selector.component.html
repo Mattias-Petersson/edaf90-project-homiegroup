@@ -1,1 +1,16 @@
 <p>selector works!</p>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <label for="country">Country:</label>
+    <select formControlName="country" #country id="countries" (change)='newCountry(country.value)'>
+      <option *ngFor="let country of countries; let i = index" [value]="countries[i].id">
+        {{countries[i].name}}
+      </option>
+    </select>
+    <label for="city">City:</label>
+    <select formControlName="city" id="cities">
+      <option *ngFor="let city of cities; let i = index" [value]="cities[i].id">
+        {{cities[i].name + ', ' + cities[i].admin}}
+      </option>
+    </select>
+    <button>submit</button>
+</form>

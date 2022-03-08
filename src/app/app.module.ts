@@ -8,6 +8,7 @@ import { ContainerComponent } from './container/container.component';
 import { WeatherForecastComponent } from './weather-forecast/weather-forecast.component';
 import { WeatherCurrentComponent } from './weather-current/weather-current.component';
 import { WeatherAlertsComponent } from './weather-alerts/weather-alerts.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 
 @NgModule({
@@ -21,7 +22,8 @@ import { Component } from '@angular/core';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
