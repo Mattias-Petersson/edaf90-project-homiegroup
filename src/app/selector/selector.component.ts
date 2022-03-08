@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
+import { CoordinatesService } from '../coordinates.service';
 
 
 @Component({
@@ -20,9 +21,10 @@ export class SelectorComponent implements OnInit {
   countries: Observable<any[]>;
   cities: Observable<any[]>;
   firestore: AngularFirestore
+  coordinates: CoordinatesService
   coords = {lat:0, lgn:0};
 
-  constructor(private formBuilder: FormBuilder, firestore: AngularFirestore) {
+  constructor(private formBuilder: FormBuilder, firestore: AngularFirestore, coordinates: CoordinatesService) {
     
     this.form = this.formBuilder.group({
       countries: [''],
@@ -31,11 +33,23 @@ export class SelectorComponent implements OnInit {
     this.countries = firestore.collection('countries').valueChanges();
     this.cities = new Observable<any[]>();
     this.firestore = firestore;
+    this.coordinates = coordinates;
   }
 
   newCountry(country: string) {
     this.cities = this.getCities(country);
   }
+
+  set latitude(data: number){
+    this.coordinates.lat = data;
+  }
+
+  set longitude(data: number){
+    this.coordinates.lgn = data;
+  }
+
+
+
 
   newCity(coords: string) {
     this.coords.lat = parseFloat(coords.split(',')[0]);
@@ -47,7 +61,8 @@ export class SelectorComponent implements OnInit {
   }
 
   submit() {
-    console.log(JSON.stringify(this.coords));
+    this.coordinates.lat = this.coords.lat;
+    this.coordinates.lgn = this.coords.lgn;
   }
 
   ngOnInit(): void {
