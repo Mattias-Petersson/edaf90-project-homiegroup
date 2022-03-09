@@ -1,6 +1,8 @@
 import { Component, Injectable, OnInit, NgModule } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { fromFetch } from 'rxjs/fetch';
+import { switchMap, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-weather-current',
@@ -9,47 +11,51 @@ import { from, Observable } from 'rxjs';
 })
 @Injectable()
 export class WeatherCurrentComponent implements OnInit {
-  // private currentWeatherTimestamp: number;
-
+  weatherInfo: { hourly: [] };
+  hourly: Observable<any[]>;
   constructor(
-    private http: HttpClient
   ) {
+    this.weatherInfo = { hourly: [] };
+    this.hourly = new Observable<any[]>();
   }
 
   ngOnInit(): void {
-    this.getWeather();
+    this.getWeather(55.61, 13.00);
   }
-
-  getWeather() {
-    let lat = 33.44; // Chicago
-    let lon = -94.04;
-    let weatherInfo;
-    // Should make the API key hidden. 
-    const observer = from(fetch(`api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&appid=e013ee4b357a1f6290404c173646e3ce`));
-    observer.subscribe({
-      next: data => { weatherInfo = data; },
-      error: error => { console.error('Error: ', error); },
-      complete() { console.log("Done"); }
+  getWeather(lat: number, lon: number) {
+    const data = fromFetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`).pipe(
+      switchMap(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return of({ error: true, message: `Error ${response.status}` });
+        }
+      }),
+      catchError(err => {
+        console.error(err);
+        return of({ error: true, message: err.message })
+      })
+    );
+    data.subscribe({
+      next: result => this.parseData(result),
+      complete: () => console.log('Done!')
     });
-    return weatherInfo;
+
   }
+  parseData(data: any) {
+    this.weatherInfo = data;
+    //   let test = this.weatherInfo.hourly.map(forecast => forecast["feels_like"]);
+    this.hourly = of(this.weatherInfo.hourly);
+    // console.log(this.dt);
+    //   console.log(test);
+  }
+  // Gets the current date. 
+  Date(time: number) {
+    let date = new Date(time.valueOf());
+    let day = date.toLocaleDateString("sv-SE");
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+    return `${day} ${hour}:${minutes}0`;
 
-  // 
-
-  // getWeatherByLocation(latitude: number, longitude: number): Observable<any> {
-  //   return Observable.interval(this.weatherUpdateInterval).startWith(0)
-  //     .switchMap(() =>
-  //       this.http.get(
-  //         `${apiConfig.host}/weather?appid=${apiConfig.appId}&lat=${latitude}&lon=${longitude}&units=${this.unitSystem}`
-  //       )
-  //         .map((response: Response) => response.json())
-  //         .map((data) => {
-  //           const weather = this.handleResponseWeatherData(data);
-
-  //           this.weather.next(weather);
-  //           return weather;
-  //         })
-  //         .catch(this.handleError)
-  //     );
-  // }
+  }
 }
