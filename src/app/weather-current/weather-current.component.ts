@@ -1,8 +1,8 @@
 import { Component, Injectable, OnInit, NgModule } from '@angular/core';
 import { of } from 'rxjs';
-import { fromFetch } from 'rxjs/fetch';
 import { switchMap, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-weather-current',
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 export class WeatherCurrentComponent implements OnInit {
   weatherInfo: { hourly: [] };
   hourly: Observable<any[]>;
-  constructor(
+  constructor(private http: HttpClient
   ) {
     this.weatherInfo = { hourly: [] };
     this.hourly = new Observable<any[]>();
@@ -23,24 +23,11 @@ export class WeatherCurrentComponent implements OnInit {
     this.getWeather(55.61, 13.00);
   }
   getWeather(lat: number, lon: number) {
-    const data = fromFetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`).pipe(
-      switchMap(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return of({ error: true, message: `Error ${response.status}` });
-        }
-      }),
-      catchError(err => {
-        console.error(err);
-        return of({ error: true, message: err.message })
-      })
-    );
-    data.subscribe({
+    let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`;
+    const data = this.http.get(url).subscribe({
       next: result => this.parseData(result),
       complete: () => console.log('Done!')
     });
-
   }
   parseData(data: any) {
     this.weatherInfo = data;
