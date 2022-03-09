@@ -11,28 +11,27 @@ import { catchError, retry } from 'rxjs/operators';
 @Injectable()
 export class WeatherCurrentComponent implements OnInit {
   // private currentWeatherTimestamp: number;
-  
+
   constructor(
     private http: HttpClient
-    ) { 
+  ) {
   }
 
   ngOnInit(): void {
+    this.getWeather();
   }
-  
+
   getWeather() {
     let lat = 33.44; // Chicago
     let lon = -94.04;
+    let weatherInfo;
     // Should make the API key hidden. 
     const res = this.http.get(`api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&appid=e013ee4b357a1f6290404c173646e3ce`)
-    const resSub = res.subscribe( {
-      next(location) {
-        console.log(`Current weather at ${location}: `);
-      },error(){
-        console.log('Error');
-      }
+    res.subscribe({
+      next: data => { weatherInfo = data; },
+      error: error => { console.error('Error: ', error); }
     });
-
+    return weatherInfo;
   }
 
   // 

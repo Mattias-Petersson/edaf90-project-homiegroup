@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class CoordinatesService {
   lat: number
-  lgn: number
-  constructor() { 
+  lon: number
+  constructor() {
     this.lat = 0;
-    this.lgn = 0;
+    this.lon = 0;
   }
 }
