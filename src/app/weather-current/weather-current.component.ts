@@ -1,7 +1,6 @@
 import { Component, Injectable, OnInit, NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-weather-current',
@@ -26,10 +25,11 @@ export class WeatherCurrentComponent implements OnInit {
     let lon = -94.04;
     let weatherInfo;
     // Should make the API key hidden. 
-    const res = this.http.get(`api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&appid=e013ee4b357a1f6290404c173646e3ce`)
-    res.subscribe({
+    const observer = from(fetch(`api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&appid=e013ee4b357a1f6290404c173646e3ce`));
+    observer.subscribe({
       next: data => { weatherInfo = data; },
-      error: error => { console.error('Error: ', error); }
+      error: error => { console.error('Error: ', error); },
+      complete() { console.log("Done"); }
     });
     return weatherInfo;
   }
