@@ -52,14 +52,12 @@ export class WeatherCurrentComponent implements OnInit {
 
   }
   // This had to be done to format the website, instead of returning "temp" it was much nicer displaying "Temperature: " for example. This array would have to be changed if the API changed. 
-  currentWeatherParams(index: number) {
-    const currentWeather = ["Temperature", "Feels like", "Minimum temperature at current time", "Maximum temperature at current time",
-      "Atmospheric pressure", "Humidity", "Pressure (sea level)", "Pressure (ground level)"];
-    return currentWeather[index];
-  }
-  currentWeatherUnits(index: number) {
-    const units = ["°C", "°C", "°C", "°C", "hPa", "%", "hPa", "hPa"];
-    return units[index];
+  currentWeatherTest(index: number) {
+    const unit = {
+      parameters: ["Temperature", "Feels like", "Minimum temperature at current time", "Maximum temperature at current time",
+        "Atmospheric pressure", "Humidity", "Pressure (sea level)", "Pressure (ground level)"], units: ["°C", "°C", "°C", "°C", "hPa", "%", "hPa", "hPa"]
+    };
+    return [unit.parameters[index], unit.units[index]];
   }
 }
 
