@@ -1,3 +1,4 @@
+
 <div>
     <div class="map">
 
@@ -5,8 +6,13 @@
     <div class="curr_weather">
         <div class="curr_temp">
         </div>
+        <mat-card>
         <div class="hourly_forecast">
-            <h1>weather hourly_forecast is here!</h1>
+            <mat-card-header>
+                <mat-card-title>
+                    <h1>weather hourly_forecast is here!</h1>
+                </mat-card-title>
+            </mat-card-header>
             <li>
                 <p *ngFor="let hour of hourly | async | slice:0:10, let i = index">
                     {{Date(hour.dt.valueOf() * 1000)}}: {{hour.feels_like}} °C</p>>
@@ -14,5 +20,6 @@
             <!-- cnt * 7 -->
             <!-- <div><h3>time</h3><img>provided by api</img><h3>temp in celsius</h3><div> -->
         </div>
+    </mat-card>
     </div>
 </div>
