@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CoordinatesService } from '../coordinates.service';
+// import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-weather-current',
@@ -54,7 +55,7 @@ export class WeatherCurrentComponent implements OnInit {
     let day = date.toLocaleDateString("sv-SE");
     let hour = date.getHours();
     let minutes = date.getMinutes();
-    return `${day} ${hour}:${minutes}0`;
+    return `${day} ${hour}:${minutes}`;
 
   }
   // This had to be done to format the website, instead of returning "temp" it was much nicer displaying "Temperature: " for example. This array would have to be changed if the API changed. 

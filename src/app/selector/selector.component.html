@@ -1,5 +1,7 @@
-<p>selector works!</p>
+<mat-toolbar>
+<h1>Weather.io</h1>
 <form [formGroup]="form" (ngSubmit)="submit()">
+  <div>
     <label for="country">Country:</label>
     <select id="countries" #country (change)='newCountry(country.value)' required>
       <option *ngFor="let country of countries | async; let i = index" [value]="country.name">
@@ -9,6 +11,8 @@
         Please Select a Country!
       </option>
     </select>
+  </div>
+  <div>
     <label for="city">City:</label>
     <select id="cities" #city (change)='newCity(city.value)' required>
       <option *ngFor="let city of cities | async; let i = index"  [value]='[city.city, city.admin_name, city.lat, city.lng]'>
@@ -18,4 +22,6 @@
         Please Select a City!
       </option>
     </select>
+  </div>
 </form>
+</mat-toolbar>

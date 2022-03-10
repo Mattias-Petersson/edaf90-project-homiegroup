@@ -5,13 +5,20 @@
     <div class="curr_weather">
         <div class="curr_temp">
         </div>
+        <mat-card>
         <div class="current">
+            <mat-card-header>
+            <mat-card-title>
             <h2>Current weather at {{name}}, current time: {{Date(time * 1000)}}</h2>
-            <p *ngFor="let data of main | async, let i = index">
-                {{currentWeatherValues(i)[0]}}: {{data[1]}} {{currentWeatherValues(i)[1]}}
-            </p>
-            <li>
-            </li>
+            </mat-card-title>
+            </mat-card-header>
+                <mat-list>
+                    <mat-list-item *ngFor="let data of main | async, let i = index">
+                        {{currentWeatherValues(i)[0]}}: {{data[1]}} {{currentWeatherValues(i)[1]}}
+                        <mat-divider></mat-divider>
+                    </mat-list-item>
+                </mat-list>
         </div>
+        </mat-card>
     </div>
 </div>
