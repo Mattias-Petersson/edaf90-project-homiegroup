@@ -20,24 +20,39 @@ export class SelectorComponent implements OnInit {
   form: FormGroup;
   countries: Observable<any[]>;
   cities: Observable<any[]>;
-  firestore: AngularFirestore
-  coordinates: CoordinatesService
+  country: string;
+  city: string;
+  firestore: AngularFirestore;
+  cityDisabled: boolean;
+  coordinates: CoordinatesService;
   coords = { lat: 0, lon: 0 };
 
   constructor(private formBuilder: FormBuilder, firestore: AngularFirestore, coordinates: CoordinatesService) {
-
+    this.city = "";
+    this.country = '';
     this.form = this.formBuilder.group({
-      countries: [''],
-      cities: ['']
+      countries: [this.country],
+      cities: [this.city]
     });
     this.countries = firestore.collection('countries').valueChanges();
     this.cities = new Observable<any[]>();
     this.firestore = firestore;
     this.coordinates = coordinates;
+    this.cityDisabled = true;
   }
 
   newCountry(country: string) {
-    this.cities = this.getCities(country);
+    if(country === "null") {
+      this.cities = new Observable<any[]>();
+      this.country = "";
+      this.coords.lat = 0;
+      this.coords.lon = 0;
+      this.city = "";
+    }
+    else {
+      this.cities = this.getCities(country);
+      this.country = country;
+    }
   }
 
   set latitude(data: number) {
@@ -52,8 +67,16 @@ export class SelectorComponent implements OnInit {
 
 
   newCity(coords: string) {
-    this.coords.lat = parseFloat(coords.split(',')[0]);
-    this.coords.lon = parseFloat(coords.split(',')[1]);
+    if(coords !== "") {
+      this.coords.lat = parseFloat(coords.split(',')[2]);
+      this.coords.lon = parseFloat(coords.split(',')[3]);
+      this.city = coords.split(',')[0] + ', ' + coords.split(',')[1];
+    }
+    else{
+      this.coords.lat = 0;
+      this.coords.lon = 0;
+      this.city = "";
+    }
   }
 
   getCities(input: string) {
@@ -61,8 +84,11 @@ export class SelectorComponent implements OnInit {
   }
 
   submit() {
-    this.coordinates.lat = this.coords.lat;
-    this.coordinates.lon = this.coords.lon;
+    if(this.city !== "" && this.country !== ""){
+      console.log("submitted");
+      this.coordinates.lat = this.coords.lat;
+      this.coordinates.lon = this.coords.lon;
+    }
   }
 
   ngOnInit(): void {

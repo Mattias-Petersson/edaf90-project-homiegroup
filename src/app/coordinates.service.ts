@@ -7,7 +7,7 @@ export class CoordinatesService {
   lat: number
   lon: number
   constructor() {
-    this.lat = 0;
-    this.lon = 0;
+    this.lat = 30;
+    this.lon = 60;
   }
 }

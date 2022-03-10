@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { CoordinatesService } from '../coordinates.service';
 
 @Component({
   selector: 'app-weather-current',
@@ -13,14 +14,16 @@ import { HttpClient } from '@angular/common/http';
 export class WeatherCurrentComponent implements OnInit {
   weatherInfo: { hourly: [] };
   hourly: Observable<any[]>;
-  constructor(private http: HttpClient
+  coordinates: CoordinatesService;
+  constructor(private http: HttpClient, coordinates: CoordinatesService
   ) {
     this.weatherInfo = { hourly: [] };
     this.hourly = new Observable<any[]>();
+    this.coordinates = coordinates;
   }
 
   ngOnInit(): void {
-    this.getWeather(55.61, 13.00);
+    this.getWeather(this.coordinates.lat, this.coordinates.lon);
   }
   getWeather(lat: number, lon: number) {
     let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`;

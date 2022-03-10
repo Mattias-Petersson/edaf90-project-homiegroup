@@ -1,15 +1,21 @@
 <p>selector works!</p>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <label for="country">Country:</label>
-    <select id="countries" #country (change)='newCountry(country.value)'>
+    <select id="countries" #country (change)='newCountry(country.value)' required>
       <option *ngFor="let country of countries | async; let i = index" [value]="country.name">
         {{country.name}}
       </option>
+      <option [value]="null">
+        Please Select a Country!
+      </option>
     </select>
     <label for="city">City:</label>
-    <select id="cities" #city (change)='newCity(city.value)'>
-      <option *ngFor="let city of cities | async; let i = index" [value]='[city.lat, city.lng]'>
+    <select id="cities" #city (change)='newCity(city.value)' required>
+      <option *ngFor="let city of cities | async; let i = index"  [value]='[city.city, city.admin_name, city.lat, city.lng]'>
         {{city.city + ', ' + city.admin_name}}
+      </option>
+      <option [value]="">
+        Please Select a City!
       </option>
     </select>
     <button>submit</button>
