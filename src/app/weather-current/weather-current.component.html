@@ -6,11 +6,12 @@
         <div class="curr_temp">
         </div>
         <div class="current">
-            <h1>weather current is here!</h1>
+            <h2>Current weather at {{name}}, current time: {{Date(time * 1000)}}</h2>
+            <p *ngFor="let data of main | async, let i = index">
+                {{currentWeatherParams(i)}}: {{data[1]}} {{currentWeatherUnits(i)}}
+            </p>
             <li>
             </li>
-            <!-- cnt * 7 -->
-            <!-- <div><h3>time</h3><img>provided by api</img><h3>temp in celsius</h3><div> -->
         </div>
     </div>
 </div>

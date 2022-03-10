@@ -11,17 +11,23 @@ import { CoordinatesService } from '../coordinates.service';
 })
 @Injectable()
 export class WeatherCurrentComponent implements OnInit {
-  weatherInfo: {};
+  weatherInfo: { main: [], name: '', dt: 0 };
+  main: Observable<any[]>;
+  name: '';
+  time: number;
   coordinates: CoordinatesService;
   constructor(private http: HttpClient, coordinates: CoordinatesService
   ) {
-    this.weatherInfo = {};
+    this.weatherInfo = { main: [], name: '', dt: 0 };
+    this.main = new Observable<any[]>();
+    this.name = '';
+    this.time = 0;
     this.coordinates = coordinates;
 
   }
 
   ngOnInit(): void {
-    this.getWeather(55.61, 13.00);
+    this.getWeather(this.coordinates.lat, this.coordinates.lon);
   }
   getWeather(lat: number, lon: number) {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`;
@@ -32,9 +38,11 @@ export class WeatherCurrentComponent implements OnInit {
   }
   parseData(data: any) {
     this.weatherInfo = data;
+    console.log(this.weatherInfo);
+    this.main = of(Object.entries(this.weatherInfo.main));
+    this.name = this.weatherInfo['name'];
+    this.time = this.weatherInfo['dt'];
   }
-
-  // Gets the current date. 
   Date(time: number) {
     let date = new Date(time.valueOf());
     let day = date.toLocaleDateString("sv-SE");
@@ -43,4 +51,15 @@ export class WeatherCurrentComponent implements OnInit {
     return `${day} ${hour}:${minutes}0`;
 
   }
+  // This had to be done to format the website, instead of returning "temp" it was much nicer displaying "Temperature: " for example. This array would have to be changed if the API changed. 
+  currentWeatherParams(index: number) {
+    const currentWeather = ["Temperature", "Feels like", "Minimum temperature at current time", "Maximum temperature at current time",
+      "Atmospheric pressure", "Humidity", "Pressure (sea level)", "Pressure (ground level)"];
+    return currentWeather[index];
+  }
+  currentWeatherUnits(index: number) {
+    const units = ["°C", "°C", "°C", "°C", "hPa", "%", "hPa", "hPa"];
+    return units[index];
+  }
 }
+
