@@ -20,6 +20,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 
@@ -30,7 +32,8 @@ import {MatListModule} from '@angular/material/list';
     ContainerComponent,
     WeatherForecastComponent,
     WeatherCurrentComponent,
-    WeatherAlertsComponent
+    WeatherAlertsComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import {MatListModule} from '@angular/material/list';
     MatToolbarModule,
     MatSelectModule, 
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
