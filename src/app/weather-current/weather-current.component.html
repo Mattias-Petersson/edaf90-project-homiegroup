@@ -8,7 +8,7 @@
         <div class="current">
             <h2>Current weather at {{name}}, current time: {{Date(time * 1000)}}</h2>
             <p *ngFor="let data of main | async, let i = index">
-                {{currentWeatherTest(i)[0]}}: {{data[1]}} {{currentWeatherTest(i)[1]}}
+                {{currentWeatherValues(i)[0]}}: {{data[1]}} {{currentWeatherValues(i)[1]}}
             </p>
             <li>
             </li>
