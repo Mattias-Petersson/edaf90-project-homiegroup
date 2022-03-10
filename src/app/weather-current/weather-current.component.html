@@ -5,11 +5,9 @@
     <div class="curr_weather">
         <div class="curr_temp">
         </div>
-        <div class="hourly_forecast">
+        <div class="current">
             <h1>weather current is here!</h1>
             <li>
-                <p *ngFor="let hour of hourly | async | slice:0:10, let i = index">
-                    {{Date(hour.dt.valueOf() * 1000)}}: {{hour.feels_like}} °C</p>>
             </li>
             <!-- cnt * 7 -->
             <!-- <div><h3>time</h3><img>provided by api</img><h3>temp in celsius</h3><div> -->
