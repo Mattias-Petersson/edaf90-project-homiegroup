@@ -21,7 +21,13 @@ export class WeatherForecastComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getWeather(this.coordinates.lat, this.coordinates.lon);
+    this.getWeatherData();
+  }
+
+  getWeatherData(): void {
+    this.coordinates.getForecastResults()
+        .subscribe(data => {
+          this.parseData(data)});
   }
   getWeather(lat: number, lon: number) {
     let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,daily,alerts&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`;

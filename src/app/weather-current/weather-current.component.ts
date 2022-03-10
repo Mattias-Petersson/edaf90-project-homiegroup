@@ -23,12 +23,18 @@ export class WeatherCurrentComponent implements OnInit {
     this.name = '';
     this.time = 0;
     this.coordinates = coordinates;
-
   }
 
   ngOnInit(): void {
-    this.getWeather(this.coordinates.lat, this.coordinates.lon);
+    this.getWeatherData();
   }
+
+  getWeatherData(): void {
+    this.coordinates.getCurrentResults()
+        .subscribe(data => {
+          this.parseData(data)});
+  }
+  
   getWeather(lat: number, lon: number) {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`;
     this.http.get(url).subscribe({

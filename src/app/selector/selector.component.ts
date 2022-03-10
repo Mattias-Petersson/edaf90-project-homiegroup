@@ -71,6 +71,11 @@ export class SelectorComponent implements OnInit {
       this.coords.lat = parseFloat(coords.split(',')[2]);
       this.coords.lon = parseFloat(coords.split(',')[3]);
       this.city = coords.split(',')[0] + ', ' + coords.split(',')[1];
+      console.log("submitted");
+      this.coordinates.lat = this.coords.lat;
+      this.coordinates.lon = this.coords.lon;
+      this.coordinates.getCurrentWeather();
+      this.coordinates.getWeatherForecast();
     }
     else{
       this.coords.lat = 0;
@@ -85,9 +90,7 @@ export class SelectorComponent implements OnInit {
 
   submit() {
     if(this.city !== "" && this.country !== ""){
-      console.log("submitted");
-      this.coordinates.lat = this.coords.lat;
-      this.coordinates.lon = this.coords.lon;
+      
     }
   }
 
