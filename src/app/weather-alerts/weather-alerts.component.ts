@@ -39,7 +39,7 @@ export class WeatherAlertsComponent implements OnInit {
 
   parseData(data: any) {
     this.alertInfo = data;
-    console.log('halååååå');
+    console.log('alert-info' + JSON.stringify(this.alertInfo));
     this.main = of(Object.entries(this.alertInfo.main));
     this.sender_name = this.alertInfo['sender_name'];
     this.start = this.alertInfo['start'];

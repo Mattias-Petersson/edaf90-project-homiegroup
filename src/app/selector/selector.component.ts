@@ -42,7 +42,7 @@ export class SelectorComponent implements OnInit {
   }
 
   newCountry(country: string) {
-    if(country === "null") {
+    if (country === "null") {
       this.cities = new Observable<any[]>();
       this.country = "";
       this.coords.lat = 0;
@@ -67,7 +67,7 @@ export class SelectorComponent implements OnInit {
 
 
   newCity(coords: string) {
-    if(coords !== "") {
+    if (coords !== "") {
       this.coords.lat = parseFloat(coords.split(',')[2]);
       this.coords.lon = parseFloat(coords.split(',')[3]);
       this.city = coords.split(',')[0] + ', ' + coords.split(',')[1];
@@ -76,8 +76,9 @@ export class SelectorComponent implements OnInit {
       this.coordinates.lon = this.coords.lon;
       this.coordinates.getCurrentWeather();
       this.coordinates.getWeatherForecast();
+      this.coordinates.getAlert();
     }
-    else{
+    else {
       this.coords.lat = 0;
       this.coords.lon = 0;
       this.city = "";
@@ -89,8 +90,8 @@ export class SelectorComponent implements OnInit {
   }
 
   submit() {
-    if(this.city !== "" && this.country !== ""){
-      
+    if (this.city !== "" && this.country !== "") {
+
     }
   }
 
