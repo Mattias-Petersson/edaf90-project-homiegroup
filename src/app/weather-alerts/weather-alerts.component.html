@@ -7,20 +7,19 @@
         </mat-card-title>
       </mat-card-header>
 
-      <mat-list>
-        <mat-list-item
+      <!-- <mat-list> -->
+        <mat-card-content
           *ngFor="let data of alerts | async | slice: 0:10; let i = index"
         >
           {{ data.event }} <br />
 
           Start: {{ Date(data.start.valueOf() * 1000) }}, End:
           {{ Date(data.end.valueOf() * 1000) }} <br />
-
-          {{ data.description }}
+          <p>{{ data.description }}</p>
 
           <mat-divider></mat-divider>
-        </mat-list-item>
-      </mat-list>
+        </mat-card-content>
+      <!-- </mat-list> -->
     </div>
   </mat-card>
 </div>
