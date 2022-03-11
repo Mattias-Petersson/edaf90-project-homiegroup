@@ -1,26 +1,26 @@
-
 <div>
-    <div class="map">
-
-    </div>
-    <div class="curr_weather">
-        <div class="curr_temp">
-        </div>
-        <mat-card>
-        <div class="hourly_forecast">
-            <mat-card-header>
-                <mat-card-title>
-                    <h1>Hourly forecast at {{name}}!</h1>
-                </mat-card-title>
-            </mat-card-header>
-            <mat-list>
-                <mat-list-item *ngFor="let hour of hourly | async | slice:0:10, let i = index">
-                    {{Date(hour.dt.valueOf() * 1000)}}: {{hour.feels_like}} °C</mat-list-item>>
-                <mat-divider></mat-divider>
-            </mat-list>
-            <!-- cnt * 7 -->
-            <!-- <div><h3>time</h3><img>provided by api</img><h3>temp in celsius</h3><div> -->
-        </div>
+  <div class="map"></div>
+  <div class="curr_weather">
+    <div class="curr_temp"></div>
+    <mat-card>
+      <div class="hourly_forecast">
+        <mat-card-header>
+          <mat-card-title>
+            <h1>Hourly forecast at {{ name }}!</h1>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-list>
+          <mat-list-item
+            *ngFor="let hour of hourly | async | slice: 0:10; let i = index"
+          >
+            {{ Date(hour.dt.valueOf() * 1000) }}:
+            {{ hour.feels_like }} °C</mat-list-item
+          >
+          <mat-divider></mat-divider>
+        </mat-list>
+        <!-- cnt * 7 -->
+        <!-- <div><h3>time</h3><img>provided by api</img><h3>temp in celsius</h3><div> -->
+      </div>
     </mat-card>
-    </div>
+  </div>
 </div>

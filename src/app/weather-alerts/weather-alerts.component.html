@@ -3,23 +3,18 @@
     <div class="alert">
       <mat-card-header>
         <mat-card-title>
-          <h2>Current alerts:</h2>
+          <h1>Current alerts:</h1>
         </mat-card-title>
       </mat-card-header>
 
-      <!-- <mat-list> -->
-        <mat-card-content
-          *ngFor="let data of alerts | async | slice: 0:10; let i = index"
-        >
-          {{ data.event }} <br />
+      <mat-card-content *ngFor="let data of alerts | async; let i = index">
+        Type of warning: {{ data.event }} <br />
+        Start: {{ Date(data.start.valueOf() * 1000) }}, End:
+        {{ Date(data.end.valueOf() * 1000) }} <br />
+        <p>{{ data.description }}</p>
 
-          Start: {{ Date(data.start.valueOf() * 1000) }}, End:
-          {{ Date(data.end.valueOf() * 1000) }} <br />
-          <p>{{ data.description }}</p>
-
-          <mat-divider></mat-divider>
-        </mat-card-content>
-      <!-- </mat-list> -->
+        <mat-divider></mat-divider>
+      </mat-card-content>
     </div>
   </mat-card>
 </div>
