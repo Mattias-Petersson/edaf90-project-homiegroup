@@ -8,11 +8,17 @@
       </mat-card-header>
 
       <mat-list>
-        <mat-list-item *ngFor="let data of main | async; let i = index">
-          {{ currentAlertValues(i) }}: {{ data[1] }}
+        <mat-list-item
+          *ngFor="let data of alerts | async | slice: 0:10; let i = index"
+        >
+          {{ data.event }} <br />
+
+          Start: {{ Date(data.start.valueOf() * 1000) }}, End:
+          {{ Date(data.end.valueOf() * 1000) }} <br />
+
+          {{ data.description }}
 
           <mat-divider></mat-divider>
-          <p>hej</p>
         </mat-list-item>
       </mat-list>
     </div>

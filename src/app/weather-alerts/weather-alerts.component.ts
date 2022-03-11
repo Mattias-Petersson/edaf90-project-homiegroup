@@ -5,6 +5,33 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CoordinatesService } from '../coordinates.service';
 
+let test = {
+  lat: 33.44,
+  lon: -94.04,
+  timezone: 'America/Chicago',
+  timezone_offset: -21600,
+  alerts: [
+    {
+      sender_name: 'NWS Tulsa',
+      event: 'Heat Advisory',
+      start: 1597341600,
+      end: 1597366800,
+      description:
+        '...HEAT ADVISORY REMAINS IN EFFECT FROM 1 PM THIS AFTERNOON TO\n8 PM CDT THIS EVENING...\n* WHAT...Heat index values of 105 to 109 degrees expected.\n* WHERE...Creek, Okfuskee, Okmulgee, McIntosh, Pittsburg,\nLatimer, Pushmataha, and Choctaw Counties.\n* WHEN...From 1 PM to 8 PM CDT Thursday.\n* IMPACTS...The combination of hot temperatures and high\nhumidity will combine to create a dangerous situation in which\nheat illnesses are possible.',
+      tags: ['Extreme temperature value'],
+    },
+    {
+      sender_name: 'NWS Dulsa',
+      event: 'Heat Advisory',
+      start: 1597341600,
+      end: 1597366800,
+      description:
+        '...HEAT ADVISORY REMAINS IN EFFECT FROM 1 PM THIS AFTERNOON TO\n8 PM CDT THIS EVENING...\n* WHAT...Heat index values of 105 to 109 degrees expected.\n* WHERE...Creek, Okfuskee, Okmulgee, McIntosh, Pittsburg,\nLatimer, Pushmataha, and Choctaw Counties.\n* WHEN...From 1 PM to 8 PM CDT Thursday.\n* IMPACTS...The combination of hot temperatures and high\nhumidity will combine to create a dangerous situation in which\nheat illnesses are possible.',
+      tags: ['Extreme temperature value'],
+    },
+  ],
+};
+
 @Component({
   selector: 'app-weather-alerts',
   templateUrl: './weather-alerts.component.html',
@@ -12,18 +39,24 @@ import { CoordinatesService } from '../coordinates.service';
 })
 @Injectable()
 export class WeatherAlertsComponent implements OnInit {
-  alertInfo: { main: []; sender_name: ''; start: 0; end: 0 };
-  main: Observable<any[]>;
-  sender_name: '';
-  start: number;
-  end: number;
+  alertInfo: {
+    alerts: [];
+    start: number[];
+    end: number[];
+  };
+  alerts: Observable<any[]>;
+  start: number[];
+  end: number[];
   coordinates: CoordinatesService;
   constructor(private http: HttpClient, coordinates: CoordinatesService) {
-    this.alertInfo = { main: [], sender_name: '', start: 0, end: 0 };
-    this.main = new Observable<any[]>();
-    this.sender_name = '';
-    this.start = 0;
-    this.end = 0;
+    this.alertInfo = {
+      alerts: [],
+      start: [],
+      end: [],
+    };
+    this.alerts = new Observable<any[]>();
+    this.start = [];
+    this.end = [];
     this.coordinates = coordinates;
   }
 
@@ -38,10 +71,10 @@ export class WeatherAlertsComponent implements OnInit {
   }
 
   parseData(data: any) {
+    data = test;
     this.alertInfo = data;
-    console.log('alert-info' + JSON.stringify(this.alertInfo));
-    this.main = of(Object.entries(this.alertInfo.main));
-    this.sender_name = this.alertInfo['sender_name'];
+    console.log(JSON.stringify(this.alertInfo));
+    this.alerts = of(this.alertInfo.alerts);
     this.start = this.alertInfo['start'];
     this.end = this.alertInfo['end'];
   }
