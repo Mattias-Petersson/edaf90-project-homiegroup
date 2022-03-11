@@ -13,11 +13,13 @@ export class WeatherForecastComponent implements OnInit {
   weatherForecast: { hourly: [] };
   hourly: Observable<any[]>;
   coordinates: CoordinatesService;
+  name: string;
   constructor(private http: HttpClient, coordinates: CoordinatesService
   ) {
     this.weatherForecast = { hourly: [] };
     this.hourly = new Observable<any[]>();
     this.coordinates = coordinates;
+    this.name = "";
   }
 
   ngOnInit(): void {
@@ -40,6 +42,7 @@ export class WeatherForecastComponent implements OnInit {
   parseData(data: any) {
     this.weatherForecast = data;
     this.hourly = of(this.weatherForecast.hourly);
+    this.name = this.coordinates.name;
   }
   // Gets the current date. 
   Date(time: number) {

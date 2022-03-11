@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class CoordinatesService {
   lat: number;
   lon: number;
+  name: string;
   current: Subject<any>;
   forecast: Subject<any>;
   alert: Subject<any>;
@@ -17,6 +18,7 @@ export class CoordinatesService {
     this.current = new Subject();
     this.forecast = new Subject();
     this.alert = new Subject();
+    this.name = "";
   }
   getCurrentWeather(): void {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`;

@@ -14,7 +14,7 @@ import { CoordinatesService } from '../coordinates.service';
 export class WeatherCurrentComponent implements OnInit {
   weatherInfo: { main: [], name: '', dt: 0 };
   main: Observable<any[]>;
-  name: '';
+  name: string;
   time: number;
   coordinates: CoordinatesService;
   constructor(private http: HttpClient, coordinates: CoordinatesService
@@ -47,7 +47,7 @@ export class WeatherCurrentComponent implements OnInit {
     this.weatherInfo = data;
     console.log(this.weatherInfo);
     this.main = of(Object.entries(this.weatherInfo.main));
-    this.name = this.weatherInfo['name'];
+    this.name = this.coordinates.name;
     this.time = this.weatherInfo['dt'];
   }
   Date(time: number) {

@@ -71,12 +71,12 @@ export class SelectorComponent implements OnInit {
       this.coords.lat = parseFloat(coords.split(',')[2]);
       this.coords.lon = parseFloat(coords.split(',')[3]);
       this.city = coords.split(',')[0] + ', ' + coords.split(',')[1];
-      console.log("submitted");
       this.coordinates.lat = this.coords.lat;
       this.coordinates.lon = this.coords.lon;
       this.coordinates.getCurrentWeather();
       this.coordinates.getWeatherForecast();
       this.coordinates.getAlert();
+      this.coordinates.name = coords.split(',')[0] + ', ' + coords.split(',')[1];
     }
     else {
       this.coords.lat = 0;
