@@ -32,10 +32,11 @@ export class WeatherCurrentComponent implements OnInit {
 
   getWeatherData(): void {
     this.coordinates.getCurrentResults()
-        .subscribe(data => {
-          this.parseData(data)});
+      .subscribe(data => {
+        this.parseData(data)
+      });
   }
-  
+
   getWeather(lat: number, lon: number) {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=e013ee4b357a1f6290404c173646e3ce`;
     this.http.get(url).subscribe({
@@ -45,7 +46,6 @@ export class WeatherCurrentComponent implements OnInit {
   }
   parseData(data: any) {
     this.weatherInfo = data;
-    console.log(this.weatherInfo);
     this.main = of(Object.entries(this.weatherInfo.main));
     this.name = this.coordinates.name;
     this.time = this.weatherInfo['dt'];
